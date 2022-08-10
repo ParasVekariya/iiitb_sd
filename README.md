@@ -37,19 +37,19 @@ GTKWave is a fully featured GTK+ v1. 2 based wave viewer for Unix and Win32 whic
 ## For Mac OSX
 Open the terminal on your mac and type this command to install iverilog and gtkwave
 
-`brew install icarus-verilog
-sudo port install gtkwave`
+`brew install icarus-verilog`
+`sudo port install gtkwave`
 
 ## Functional Simulation
 
 To clone this repository and clone this netlist files for simulation, type the following commands
 
-`cd (to a directory where you want to clone)
-git clone https://github.com/ParasVekariya/Physical-Design-Of-ASIC-s.git
-cd Physical-Design-Of-ASIC-s
-iverilog iiitb_sdMoore.v iiitb_sdMoore_tb.v
-./a.out
-gtkwave test.vcd`
+`cd (to a directory where you want to clone)`
+`git clone https://github.com/ParasVekariya/Physical-Design-Of-ASIC-s.git`
+`cd Physical-Design-Of-ASIC-s`
+`iverilog iiitb_sdMoore.v iiitb_sdMoore_tb.v`
+`./a.out`
+`gtkwave test.vcd`
 
 # Simulations
 On following the above steps, you will be able to see something like this. You will have to add clk, y and din traces while simulating in gtkwave to see the result
