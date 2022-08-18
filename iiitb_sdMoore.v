@@ -1,4 +1,4 @@
-module morfsmolp(din, reset, clk, y);
+module iiitb_sdMoore(din, reset, clk, y);
 input din;
 input clk;
 input reset;

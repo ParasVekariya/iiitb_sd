@@ -1,12 +1,12 @@
-module morfsmolp_tb;
+module iiitb_sdMoore_tb;
 reg din,clk,reset;
 wire y;
-morfsmolp m1(din, reset, clk, y);
+iiitb_sdMoore m1(din, reset, clk, y);
 initial
 begin
 
 $dumpfile("test2.vcd");
-$dumpvars(0,morfsmolp_tb);
+$dumpvars(0,iiitb_sdMoore_tb);
 reset=0       ;clk=0;din=0;
 $monitor($time, , ,"c=%b",clk,,"y=%b",y,,"r=%b",reset,,"d=%b",din);
 #10 din=1;
@@ -23,6 +23,4 @@ $monitor($time, , ,"c=%b",clk,,"y=%b",y,,"r=%b",reset,,"d=%b",din);
 end
 always
 #5 clk=~clk;
-initial
-#100 $finish ;
 endmodule
