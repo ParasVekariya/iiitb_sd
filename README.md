@@ -31,18 +31,18 @@ Below shown is the wave file's output n testing the verilog code out against the
 
 ![WhatsApp Image 2022-08-11 at 12 30 48 PM](https://user-images.githubusercontent.com/81183082/184080610-8fca64a3-d2f4-45ef-8680-867b5e5ba77f.jpeg)
 
-# About Verilog
+## About Verilog
 Icarus Verilog is an implementation of the Verilog hardware description language. We have used this for our implementations of Sequence Detection.
 
-# About GTKWave
+## About GTKWave
 GTKWave is a fully featured GTK+ v1. 2 based wave viewer for Unix and Win32 which reads Ver Structural Verilog Compiler generated AET files as well as standard Verilog VCD/EVCD files and allows their viewing
 
-# Installing GTKWave and iverilog
-## For Mac OSX
+## Installing GTKWave and iverilog
+### For Mac OSX
 Open the terminal on your mac and type this command to install iverilog and gtkwave
 ```
 brew install icarus-verilog
-sudo port install gtkwave
+brew install --cask gtkwave
  ```
 
 ## Functional Simulation
@@ -58,6 +58,7 @@ iverilog iiitb_sdMoore.v iiitb_sdMoore_tb.v
 ./a.out
 gtkwave test.vcd
 ```
+**Note** : After writing ./a.out (if done manually), you will have to suspend it to get to the next step. Control + Z(^ + z) can be used for suspension.
 # Simulations
 On following the above steps, you will be able to see something like this. You will have to add clk, y and din traces while simulating in gtkwave to see the result
 
@@ -65,12 +66,66 @@ On following the above steps, you will be able to see something like this. You w
 
 ***Note** The above waveform was generated using a Visual Studio Code Extension called [WaveTrace](https://marketplace.visualstudio.com/items?itemName=wavetrace.wavetrace)*
 
-# Synthesis of Verilog Code
+## Synthesis of Verilog Code
 
-## About Yosys
+**Synthesis** means transforming RTL design to gate level netlist with the constraints specified as per the designer.
+Synthesis is process as follows:
+- Converting the RTL to simple logic gates.
+- Mapping those gates to actual technology available gates.
+- Optimizing the design while retaining the constraints.
+
+**Synthesizer** is a tool that is used to synthesize the design. In my case, I have used yosys tool for synthesys.
+
+### About Yosys
 Yosys is a framework for Verilog RTL synthesis. It currently has extensive Verilog-2005 support and provides a basic set of synthesis algorithms for various application domains.
 
-For yosys intallation, please follow this [GitHub](https://github.com/YosysHQ/yosys) repository.
+For yosys intallation (development purpose), please follow this [GitHub](https://github.com/YosysHQ/yosys) repository.
+For yosys intallion through terminal, copy the command 
+```
+brew install yosys
+```
+After installing yosys we need to write a yosys_run.sh, which is a yosys script file to synthesize the design
+**NOTE** : Identify the .lib file in the lib folder of this cloned repo. After that replace the underlined path with your local machine's path.
+<img width="737" alt="Screenshot 2022-08-18 at 12 32 12 PM" src="https://user-images.githubusercontent.com/81183082/185329227-bf685877-064c-47a0-b341-b62452f7d91b.png">
+
+Now, on the terminal inside the cloned repo folder, run the commands.
+
+```
+yosys
+```
+And it will open an interactive yosys terminal.
+
+```
+yosys>  script yosys_run.sh
+```
+It will generate the synthesys for our design.
+
+```
+yosys>  stat
+```
+It will generate reports about the type of cells and wires.
+
+```
+yosys>  show
+```
+To generate the schematics. Now the synthesized netlist will be written in synth_iiitb_sdMoore.v file.
+
+## Gate Level Simulation( (GLS)
+GLS is generating the simulation output by running test bench with netlist file generated from synthesis as design under test. Netlist is logically same as RTL code, therefore, same test bench can be used for it.We perform this to verify logical correctness of the design after synthesizing it. Also ensuring the timing of the design is met. Folllowing are the commands to run the GLS simulation:
+
+```
+iverilog -DFUNTIONAL -DUNIT_DELAY=#1 verilog_model/primitives.v verilog_model/sky130_fd_sc_hd.v synth_iiitb_sdMoore.v iiitb_sdMoore_tb.v
+./a.out
+gtkwave test2.vcd
+```
+Note: If you are on a mac, you will have to manually open the .vcd file as it wont open from the terminal throught the code shown above.
+
+The gtkwave output for the netlist should match the output waveform of the RTL design, since the inputs and outputs are same for synthesized netlist file and RTL file, we can use the same testbench for both.
+
+### Post synthesys output
+<img width="763" alt="Screenshot 2022-08-18 at 12 52 19 PM" src="https://user-images.githubusercontent.com/81183082/185334725-568015b0-0652-4f1f-b015-3e5bc03d1f06.png">
+
+
 
 # Contributors
 - Paras Vekariya
