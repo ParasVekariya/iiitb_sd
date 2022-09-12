@@ -216,37 +216,57 @@ Final contents of sky130_inv.spice and save the file.
 <img width="654" alt="Screenshot 2022-09-12 at 11 09 32 PM" src="https://user-images.githubusercontent.com/81183082/189720413-07a84ead-9ee8-4d55-8a06-4f024280d125.png">
 
 For installation og ngspice 
-``` brew install ngspice ```
+``` 
+brew install ngspice 
+```
 
 Now opne the terminal in the folder where the sky130_inv.spice is located and type the following code.
 
-```ngspice sky130_inv.spice ```
+```
+ngspice sky130_inv.spice 
+```
 ![ngspice](https://user-images.githubusercontent.com/81183082/189721060-96483354-0993-4fdb-bde7-3ed841c45142.png)
 
 Now we can the plot the graph for the inverter using following commands
 
-``` plot y vs time a```
+``` 
+plot y vs time a
+```
 ![plot](https://user-images.githubusercontent.com/81183082/189721332-3d0ed708-1a33-418c-97e8-91fe62791780.png)
 
 Four timing parameters are used to characterize the inverter standard cell:
 
 - Rise time: Time taken for the output to rise from 20% of max value to 80% of max value
-  ``` Rise time = (2.23843 - 2.17935) = 59.08ps```
+  ``` 
+  Rise time = (2.23843 - 2.17935) = 59.08ps
+  ```
 - Fall time- Time taken for the output to fall from 80% of max value to 20% of max value
-   ``` Fall time = (4.09291 - 4.05004) = 42.87ps```
+   ``` 
+   Fall time = (4.09291 - 4.05004) = 42.87ps
+   ```
 - Cell rise delay = time(50% output rise) - time(50% input fall)
-  ``` Cell rise delay = (2.20636 - 2.15) = 56.36ps```
+  ``` 
+  Cell rise delay = (2.20636 - 2.15) = 56.36ps
+  ```
 - Cell fall delay = time(50% output fall) - time(50% input rise) 
-  ```Cell fall delay = (4.07479 - 4.05) = 24.79ps```
+  ```
+  Cell fall delay = (4.07479 - 4.05) = 24.79ps
+  ```
 
 To get a grid and to ensure the ports are placed correctly we can use this command in the tcl console
-``` grid 0.46um 0.34um 0.23um 0.17um```
+``` 
+grid 0.46um 0.34um 0.23um 0.17um
+```
 <img width="272" alt="customInverter" src="https://user-images.githubusercontent.com/81183082/189718536-78451125-e7d3-4a7d-a37b-6a5b1de2213a.png">
 
 To save the file with a different name, use the folllowing command in tcl window
-``` save sky130_vsdinv.mag```
+```
+save sky130_vsdinv.mag
+```
 Now open the sky130_vsdinv.mag using the magic command in terminal
-``` magic -T sky130A.tech sky130_vsdinv.mag```
+```
+magic -T sky130A.tech sky130_vsdinv.mag
+```
 In the tcl window type the following command to generate sky130_vsdinv.lef
 ```lef write```
 <img width="442" alt="lefWrite" src="https://user-images.githubusercontent.com/81183082/189722563-c0842a8d-0790-4fe4-8169-caf53a022a34.png">
@@ -278,12 +298,16 @@ In this file the **DESIGN_NAME** corresponds to the name of the module in your d
 
 Save all the changes made above and navigate to the OpenLane folder in terminal and run the command
 **Note**: You will have to start docker explicitly to be able to mount when compiling in macOS.
-```sudo make mount```
+```
+sudo make mount
+```
 <img width="650" alt="Openlane start" src="https://user-images.githubusercontent.com/81183082/189724193-fb51c9a6-7866-4b08-8da0-2bcfb53113f1.png">
 
 After entering the openlane container give the following command for a step by step procedure:
 
-``` ./flow.tcl -interactive```
+``` 
+./flow.tcl -interactive
+```
 This will open the tcl console. Type the comamnds every time we access the tcl console
 
 ``` 
@@ -306,52 +330,68 @@ After the merging step the contents of the merged.nom.lef file should contain th
 <img width="351" alt="4-Macro" src="https://user-images.githubusercontent.com/81183082/189725695-80d04fc6-55a6-4e27-8f16-9d97fceb26e2.png">
 
 ## Synthesis
-``` run_synthesis ```
+``` 
+run_synthesis 
+```
 <img width="648" alt="3-runsynth" src="https://user-images.githubusercontent.com/81183082/189725824-f1fdb896-06f3-4eb0-a314-45e6c0dd664f.png">
 
 ### Sythesis Report
+
 <img width="468" alt="5-synthReport" src="https://user-images.githubusercontent.com/81183082/189725921-d9321843-e56a-4000-86b6-e14ee5e4f2fc.png">
 
 Setup and Hold Slack
+
 <img width="550" alt="6-setupSlack" src="https://user-images.githubusercontent.com/81183082/189725965-27c06690-4e94-432e-8ec9-3787ab87aa0b.png">
 
 The sky130_vsdinv should also reflect in your netlist after Synthesis
+
 <img width="179" alt="7-netlistPostSynthesis" src="https://user-images.githubusercontent.com/81183082/189726007-9071b0b4-d30c-4bec-9f49-9c14dc8a44c9.png">
 
 
 ## Floorplan
 
-``` run_floorplan```
+``` 
+run_floorplan
+```
 <img width="650" alt="8-runFloorplan" src="https://user-images.githubusercontent.com/81183082/189726091-67054e03-108a-4ef7-9bb9-feb3d6fd423d.png">
 
 Floorplan report
 
 **Die Area**
+
 <img width="192" alt="9-dieArea" src="https://user-images.githubusercontent.com/81183082/189726825-caed2252-a29d-4b1f-a2c4-eec14c346345.png">
 
 **Core Area**
+
 <img width="201" alt="10-CoreArea" src="https://user-images.githubusercontent.com/81183082/189726880-f540b596-b1eb-4138-ab88-3cc0f8424cc1.png">
 
 Navigate to results -> floorplan and type the Magic command in terminal to open the floorplan
 
-```magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def & ```
+```
+magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def & 
+```
 
 ### Floorplan View
 
 <img width="448" alt="11-floorview" src="https://user-images.githubusercontent.com/81183082/189734637-ad520646-9c87-4ab9-b879-0c82ac5863d8.png">
 
 Bottom view before placement ,here its currently stacked.
+
 <img width="800" alt="12-floorview bottom" src="https://user-images.githubusercontent.com/81183082/189734679-8ac958c4-e2cb-483d-8e8f-5db2e5c24412.png">
 
 ## Placement
 
-``` run_placement```
+``` 
+run_placement
+```
 <img width="646" alt="13-runPlacement" src="https://user-images.githubusercontent.com/81183082/189734921-69857df4-694a-473b-8923-1eaa1e44610e.png">
 
 ### Placement Report
 Navigate to results->placement and type the Magic command in terminal to open the placement view
 
-```magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def &```
+```
+magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def &
+```
 
 ![14-placement](https://user-images.githubusercontent.com/81183082/189735114-d246dea1-4271-45de-9c7e-bf5b944640bd.png)
 
@@ -365,18 +405,24 @@ The sky130_vsdinv should also reflect in your netlist after placement
 
 ## Clock Tree Synthesis
 
-``` run_cts ```
+``` 
+run_cts 
+```
 <img width="650" alt="16-cts" src="https://user-images.githubusercontent.com/81183082/189735655-e76e7d53-78fb-4160-9d1a-451fd57981b6.png">
 
 ## Routing
 
-``` run_routing```
+``` 
+run_routing
+```
 <img width="779" alt="17-routing" src="https://user-images.githubusercontent.com/81183082/189737028-147c009d-de6f-4ad5-bd8c-f0c1fe9b7cbc.png">
 
 ### Routing Report
 Navigate to results->routing and type the Magic command in terminal to open the placement view.
 
-```magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def &```
+```
+magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def &
+```
 
 **Routing View**
 ![18-routing](https://user-images.githubusercontent.com/81183082/189737605-b8155ed3-0d81-4449-81c8-044c2c6b0db9.png)
