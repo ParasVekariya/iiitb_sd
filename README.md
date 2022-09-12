@@ -60,11 +60,9 @@ gtkwave test.vcd
 ```
 **Note** : After writing ./a.out (if done manually), you will have to suspend it to get to the next step. Control + Z(^ + z) can be used for suspension.
 # Simulations
-On following the above steps, you will be able to see something like this. You will have to add clk, y and din traces while simulating in gtkwave to see the result
+For simulaion, I have used GTKWave tool. After suspending the output file, you will have to manually open the **.vcd** file. After that add the traces or signal for generating the output as shown.
 
-<img width="700" alt="Screenshot%202022-08-05%20at%203 55 09%20PM" src="https://user-images.githubusercontent.com/81183082/183825242-d1b2c734-9bcb-47db-aa10-a827f5a71dcb.png">
-
-***Note** The above waveform was generated using a Visual Studio Code Extension called [WaveTrace](https://marketplace.visualstudio.com/items?itemName=wavetrace.wavetrace)*
+<img width="888" alt="Output1" src="https://user-images.githubusercontent.com/81183082/189595809-48901e56-b44a-4eb6-a701-7fc114fc8113.png">
 
 ## Synthesis of Verilog Code
 
@@ -98,17 +96,20 @@ And it will open an interactive yosys terminal.
 ```
 yosys>  script yosys_run.sh
 ```
-It will generate the synthesys for our design.
-
+It will generate the synthesys for our design. It will take 6 different steps to complete the synthesis.
 ```
 yosys>  stat
 ```
-It will generate reports about the type of cells and wires.
-
+<img width="339" alt="stat" src="https://user-images.githubusercontent.com/81183082/189597241-f7d56f7f-2edd-4809-922c-e428473b9453.png">
+To view the statistics, we will use above command and it will generate this report.
 ```
 yosys>  show
 ```
-To generate the schematics. Now the synthesized netlist will be written in synth_iiitb_sdMoore.v file.
+<img width="651" alt="show" src="https://user-images.githubusercontent.com/81183082/189597265-69afd714-996c-4746-bc2b-705321e9633c.png">
+Terminal report
+
+<img width="1288" alt="netlist" src="https://user-images.githubusercontent.com/81183082/189597963-fb3ae6e3-6cce-4b65-adfc-06f7fe78f1fd.png">
+To generate the schematics. Now the synthesized netlist will be written in synth_iiitb_sdMoore.v file and it will show the netlist as shown above.
 
 ## Gate Level Simulation( (GLS)
 GLS is generating the simulation output by running test bench with netlist file generated from synthesis as design under test. Netlist is logically same as RTL code, therefore, same test bench can be used for it.We perform this to verify logical correctness of the design after synthesizing it. Also ensuring the timing of the design is met. Folllowing are the commands to run the GLS simulation:
@@ -122,9 +123,19 @@ Note: If you are on a mac, you will have to manually open the .vcd file as it wo
 
 The gtkwave output for the netlist should match the output waveform of the RTL design, since the inputs and outputs are same for synthesized netlist file and RTL file, we can use the same testbench for both.
 
-### Post synthesys output
-<img width="763" alt="Screenshot 2022-08-18 at 12 52 19 PM" src="https://user-images.githubusercontent.com/81183082/185334725-568015b0-0652-4f1f-b015-3e5bc03d1f06.png">
+### Pre synthesys output(O1)
+<img width="997" alt="Presynth" src="https://user-images.githubusercontent.com/81183082/189598267-7ada5e27-031e-47b0-9868-5bbf63ee8f6c.png">
 
+### Post synthesys output(O2)
+<img width="1040" alt="Postsynth" src="https://user-images.githubusercontent.com/81183082/189598368-4b4bfeb6-b041-46c4-a8ae-51816a156b89.png">
+
+Observing the above two images, we see that both the outputs post synthesis and pre synthesis are same. From here on, we will start the layout process.
+
+## Docker Installation
+```
+brew install --cask docker
+```
+Above brew command will download the docker for mac.Once downloaded, open the spotlight ( cmd + space), type in docker and open the app. It requires some permission while opening the app which should be allowed, and then a whale icon will appear in the the menu bar which indicates that docker is ruunig. Now you can close the application but the docker will still run in the background.
 
 
 # Contributors
