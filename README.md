@@ -334,7 +334,67 @@ Floorplan report
 
 Navigate to results -> floorplan and type the Magic command in terminal to open the floorplan
 
-```magic -T /home/anshul/Documents/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def & ```
+```magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def & ```
+
+### Floorplan View
+
+<img width="448" alt="11-floorview" src="https://user-images.githubusercontent.com/81183082/189734637-ad520646-9c87-4ab9-b879-0c82ac5863d8.png">
+
+Bottom view before placement ,here its currently stacked.
+<img width="800" alt="12-floorview bottom" src="https://user-images.githubusercontent.com/81183082/189734679-8ac958c4-e2cb-483d-8e8f-5db2e5c24412.png">
+
+## Placement
+
+``` run_placement```
+<img width="646" alt="13-runPlacement" src="https://user-images.githubusercontent.com/81183082/189734921-69857df4-694a-473b-8923-1eaa1e44610e.png">
+
+### Placement Report
+Navigate to results->placement and type the Magic command in terminal to open the placement view
+
+```magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def &```
+
+![14-placement](https://user-images.githubusercontent.com/81183082/189735114-d246dea1-4271-45de-9c7e-bf5b944640bd.png)
+
+Zooming the layout we can find the sky130 inverter inside th design.
+
+![15-inv](https://user-images.githubusercontent.com/81183082/189735206-fe9dd0f8-e5c4-4f2d-ba7a-7f376f980a8f.png)
+
+The sky130_vsdinv should also reflect in your netlist after placement
+
+<img width="280" alt="netlistPlacement" src="https://user-images.githubusercontent.com/81183082/189735501-253be44a-5913-4be5-af28-6926902fb661.png">
+
+## Clock Tree Synthesis
+
+``` run_cts ```
+<img width="650" alt="16-cts" src="https://user-images.githubusercontent.com/81183082/189735655-e76e7d53-78fb-4160-9d1a-451fd57981b6.png">
+
+## Routing
+
+``` run_routing```
+<img width="779" alt="17-routing" src="https://user-images.githubusercontent.com/81183082/189737028-147c009d-de6f-4ad5-bd8c-f0c1fe9b7cbc.png">
+
+### Routing Report
+Navigate to results->routing and type the Magic command in terminal to open the placement view.
+
+```magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magic/sky130A.tech read ../../tmp/merged.nom.lef def read iiitb_sdMoore.def &```
+
+**Routing View**
+![18-routing](https://user-images.githubusercontent.com/81183082/189737605-b8155ed3-0d81-4449-81c8-044c2c6b0db9.png)
+
+Wiring in routing.
+![19-wire](https://user-images.githubusercontent.com/81183082/189737650-561150f6-d4d1-41ed-85e4-060b1f965dd8.png)
+
+Inverter in routing.
+
+![20-inv](https://user-images.githubusercontent.com/81183082/189737872-8b0d62b4-7998-4abc-9326-e7114012eb7a.png)
+
+**Area Report by magic**:
+
+![21-area](https://user-images.githubusercontent.com/81183082/189737957-037e3da8-13e9-4957-a084-12d9d1e103fa.png)
+
+The sky130_vsdinv should also reflect in your netlist after routing
+<img width="276" alt="netlistRouting" src="https://user-images.githubusercontent.com/81183082/189738146-a27ae248-8182-48d4-81fd-68ebf01e6531.png">
+
 
 
 # Contributors
