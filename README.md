@@ -425,6 +425,7 @@ magic -T /Users/paras/Desktop/code/iiitb_sd/OpenLane/pdks/sky130A/libs.tech/magi
 ```
 
 **Routing View**
+
 ![18-routing](https://user-images.githubusercontent.com/81183082/189737605-b8155ed3-0d81-4449-81c8-044c2c6b0db9.png)
 
 Wiring in routing.
@@ -439,8 +440,61 @@ Inverter in routing.
 ![21-area](https://user-images.githubusercontent.com/81183082/189737957-037e3da8-13e9-4957-a084-12d9d1e103fa.png)
 
 The sky130_vsdinv should also reflect in your netlist after routing
+
 <img width="276" alt="netlistRouting" src="https://user-images.githubusercontent.com/81183082/189738146-a27ae248-8182-48d4-81fd-68ebf01e6531.png">
 
+# Results-Post Layout
+
+## 1. Post Layout Gate count
+<img width="870" alt="cellCount" src="https://user-images.githubusercontent.com/81183082/192705893-ab06b90a-8559-4933-8f88-bd3ed94ec12c.png">
+Gate Count = 22
+
+## 2 Area box command
+![21-area](https://user-images.githubusercontent.com/81183082/189737957-037e3da8-13e9-4957-a084-12d9d1e103fa.png)
+**Area = 7842.509 um^2**
+
+## 3 Performance
+Below given sta command is for macOs. For other OS it might look different
+```
+./sta
+% read_liberty -max /Users/paras/Desktop/code/asic/OpenLane/designs/iiitb_sd/src/sky130_fd_sc_hd__fast.lib
+
+% read_liberty -min /Users/paras/Desktop/code/asic/OpenLane/designs/iiitb_sd/src/sky130_fd_sc_hd__slow.lib
+
+% read_verilog /Users/paras/Desktop/code/asic/OpenLane/designs/iiitb_sd/runs/RUN_2022.09.28_05.54.35/results/routing/iiitb_sdMoore.resized.v
+
+% link_design iiitb_sdMoore
+
+% read_sdc /Users/paras/Desktop/code/asic/OpenLane/designs/iiitb_sd/runs/RUN_2022.09.28_05.54.35/results/cts/iiitb_sdMoore.sdc
+
+% read_spef /Users/paras/Desktop/code/asic/OpenLane/designs/iiitb_sd/runs/RUN_2022.09.28_05.54.35/results/routing/iiitb_sdMoore.nom.spef
+
+% set_propagated_clock [all_clocks]
+
+% report_checks
+
+% report_clock_properties
+```
+<img width="796" alt="sta-1" src="https://user-images.githubusercontent.com/81183082/192708013-71e64e54-e343-4d90-af44-866d25e6eb15.png">
+<img width="619" alt="sta-2" src="https://user-images.githubusercontent.com/81183082/192708073-43e4afb2-6fa9-4dd5-90da-ec10482becd9.png">
+
+**Performance = 1/(clockPeriod - slack) = 1/(6-3.92)ns = 480 MHz**
+
+## 4 Flop/standard cell ratio
+<img width="871" alt="areaReport" src="https://user-images.githubusercontent.com/81183082/192709730-79fd14f8-33bc-4cbe-a945-16ddfe15c155.png">
+
+**Flop Ratio ={Ratio of total number of flip flops / Total number of cells present in the design} = 6/22 = 0.27**
+
+## 5 Power (internal, switching, leakage and total)
+<img width="662" alt="PowerReport" src="https://user-images.githubusercontent.com/81183082/192710061-18c95629-b52b-4440-985d-49904c22f793.png">
+ 
+**Internal Power = 132 uW (84.7%)**
+
+**Switching Power = 23.8 uW (15.3%)**
+
+**Leakage Power = 0.301 nW (0.00%)**
+
+**Total Power = 155 uW (100%)**
 
 
 # Contributors
